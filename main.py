@@ -1,4 +1,3 @@
-from cv2 import ml_NormalBayesClassifier
 from sheesh import *
 
 
