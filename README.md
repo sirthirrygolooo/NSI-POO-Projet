@@ -1,4 +1,4 @@
-# NSI-POO-Projet
+# NSI-POO-Projet 👨‍💻
  NSI projet POO octobre/novembre 2022
 
 ## **Calcul des Points**
