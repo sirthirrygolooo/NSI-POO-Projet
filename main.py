@@ -1,5 +1,3 @@
-from sheesh import *
-
 
 # Fonction principale
 def main():
