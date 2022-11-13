@@ -1,12 +1,35 @@
-
+import os
+from classes import *
 # Fonction principale
 def main():
     pass
 
-def ajouterJoueur():
-    get_name = input('Nom du pilote : ')
-    get_marque = input('Marque du véhicule : ')
-    get_ecurie = input('Sponsor (écurie) : ')
+def new_player():
+    name = input('Entrez le Nom du coureur : ')
+    description = input('Entrez l\'écurie du coureur : ')
+    results = None # pour l'instant
+    points = input('Entrez le nombre de points du coureur : ')
+    status = input('Le coureur à-t-il fini la course ? (oui/non) : ')
+
+    if status == 'oui' or status == 'Oui' or status == 'OUI' :
+        status = True
+    elif status == 'non' or status == 'Non' or status == 'NON' :
+        status = False
+    else :
+        print('Proposition invalide, veuillez recommencer...')
+        os.system('cls & pause')
+        new_player()
+
+    new = Joueur(name,description,results,points,status)
+
+def manage_team():
+    name = input('Nom du joueur à ajouter : ')
+
+    n = Equipe(name)
+
+    
+
+
     
 
 
