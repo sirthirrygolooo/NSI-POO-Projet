@@ -30,4 +30,33 @@ sachant que pénalité est une variable qui prendra en compte les différentes p
 pénalité = type_penalite1 + type_penalite2 + type_penalite3 + ...
 ```
 
-## 
+## L'interface graphique 
+
+Pour ce qui est de l'aspect GUI, nous voulions à la base faire sous flask en mi-html mi-python mais il s'est avéré que la référence du programme étant Tkinter, mieux valait travailler dessus et se familiariser avec. 
+L'idée est de faire des boutons pour pouvoir ajouter, modifier, supprimer les joueurs, les équipes puis au final afficher le classement.  
+
+Nous avons également eu l'idée de faire un système de sauvegarde tout simplement en marquant les données dans un fichier qui pourra ensuite être réimporté pour reprendre en cas de fermeture du prorgramme.  
+Pour faire cela, nous avions le choix entre différents moyens comme les fichiers textes, json ou encore csv. Nous avons finalement opté pour le csv car il est plus simple à manipuler et à lire sans compter le fait qu'il nous semblait être au programme.  
+
+L'idée est donc de faire un bouton sauvegarder pour sauver les données actuelles dans un fichier au format csv et les enregistrer dans le dossier `/save/your_name.csv` et un bouton importer/charger avec `askopenfilename` de la librairie `tkinter.filedialog` pour pouvoir choisir le fichier à importer.
+
+## La sctructure du projet
+
+Le projet se décomposerait donc en un fichier `main.py` qui contiendra le code principal, un fichier `classes.py` avec nos différentes classes un dossier tkinter avec les différents fichiers relatifs à l'interface graphique et enfin un dossier `save` qui contiendra les fichiers de sauvegarde.
+
+Aperçu :
+
+```
+~ Arborescence du projet ~
+
+├── main.py
+├── classes.py
+├── tkinter
+│   ├── __init__.py
+│   ├── fenetre.py
+│   ├── etc...
+└── save
+    ├── your_name.csv
+    ├── autres sauvergardes potentielles
+```
+
