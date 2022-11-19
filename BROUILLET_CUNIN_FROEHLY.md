@@ -26,7 +26,7 @@ Pour ce qui est de la formule pour calculer ces points, elle ressemble donc à :
 <br>
 <br>
 ```python
-nombre_points = temps_en_secondes * 2 + pénalites
+nombre_points = temps_en_secondes * 2 + pénalité
 ```
 
 sachant que pénalité est une variable qui prendra en compte les différentes pénalités appliquées au joueur :
@@ -87,12 +87,6 @@ class Concours:
     def __affiche__(self):
         return f"Classement : {self.classement}"
 
-    def modif(self):
-        pass
-
-    def recl(self, Joueur):
-        pass
-
     def saisieE(self, Equipe):
         self.classement.append(Equipe)
 ```
@@ -114,9 +108,6 @@ class Joueur:
 
     def resultJ(self):
         return f"Résultats : {self.resultats}"
-
-    def diplome(self):
-        pass
 ```
 + le fichier `main.py` avec les fonctions principales qui le composent 
 
@@ -142,7 +133,7 @@ class Equipe:
         self.joueurs.append(Joueur)
 ```
 + En fonction du temps quelques fonctions principales du programme dans le fichier `main.py` ou interessantes en tkinter selon ce que les autres ont déjà eu le temps de présenter
-+ peut-être rapidement le fichier batch mais fichier assez optionnel donc pas forcément nécessaire 
++ Peut-être rapidement le fichier batch mais fichier assez optionnel donc pas forcément nécessaire 
 
 
 ***
