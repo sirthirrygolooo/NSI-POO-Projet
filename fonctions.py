@@ -1,7 +1,9 @@
 import csv
 from tkinter import *
 from tkinter import filedialog, messagebox
-from classes import Concours, Equipe, Joueur, concours
+from tkinter_files.fenetre import *
+from classes import *
+
 
 ################################## GESTION CONCOURS ##################################
 
@@ -145,6 +147,7 @@ def ajouterEquipe():
 
 
 def modifierEquipe():
+    """Fonction permettant de modifier une équipe"""
     pass
 
 
@@ -198,7 +201,7 @@ def modifierJoueur():
                 Label(frame, width=20, font=('Arial', 20), text="Nom").grid(row=0)
                 Label(frame, width=20, font=('Arial', 20), text="Temps (en secondes)").grid(row=1)
                 Label(frame, width=20, font=('Arial', 20), text="Penalité").grid(row=2)
-                Label(frame, width=20, font=('Arial', 20), text="État (O/N)").grid(row=3)
+                Label(frame, width=20, font=('Arial', 20), text="État [O/N]").grid(row=3)
 
                 entry1 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
                 entry2 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
@@ -255,7 +258,7 @@ def ajouterJoueur():
     Label(frame, width=20, font=('Arial', 20), text="Nom").grid(row=0)
     Label(frame, width=20, font=('Arial', 20), text="Temps (en secondes)").grid(row=1)
     Label(frame, width=20, font=('Arial', 20), text="Penalité").grid(row=2)
-    Label(frame, width=20, font=('Arial', 20), text="État (O/N)").grid(row=3)
+    Label(frame, width=20, font=('Arial', 20), text="État [O/N]").grid(row=3)
 
     entry1 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
     entry2 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
@@ -270,6 +273,7 @@ def ajouterJoueur():
     annuler = Button(frame, text="Annuler", command=fenetre.destroy).grid(row=5, column=1, sticky=W, pady=4)
 
     afficherFrame(frame)
+    concours.afficherE()
 
 
 ############################## FENETRE TKINTER ##############################

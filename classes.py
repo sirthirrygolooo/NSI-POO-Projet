@@ -1,5 +1,3 @@
-from tkinter import Entry, END, Button
-
 class Joueur:
     def __init__(self, nom, points, penalite, etat):
         self.nom = nom
@@ -8,6 +6,10 @@ class Joueur:
         self.penalite = penalite
         self.etat = etat
     
+    def __str__(self):
+        return self.nom + " " + str(self.points) + " " + str(self.penalite) + " " + str(self.etat)
+
+
     def getName(self):
         nom = self.nom
         return nom
@@ -75,5 +77,13 @@ class Concours:
             self.disqualifie.append(Joueur)
         self.joueurs.append(Joueur)
 
+    def saisieE(self, Equipe):
+        self.equipes.append(Equipe)
+
+    def afficherE(self):
+        for i in self.equipes:
+            print(i.nom, i.listeJoueurs())
+
 
 concours = Concours()
+equipe = Equipe('Equipe 1')

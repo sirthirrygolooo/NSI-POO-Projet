@@ -1,9 +1,7 @@
 from classes import Concours
 import os
 
-from sys import path
-path.insert(1, './tkinter')
-from fenetre import afficher_fenetre
+from tkinter_files.fenetre import afficher_fenetre
 
 try :
     import tkinter as tk
@@ -13,21 +11,3 @@ except ImportError :
     exit()
 
 afficher_fenetre()
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-    
-
-

@@ -1,7 +1,5 @@
 from tkinter import *
 
-from sys import path
-path.insert(1, '../')
 from fonctions import *
 
 # Paramètres de la fenêtre
