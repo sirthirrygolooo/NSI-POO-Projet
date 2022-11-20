@@ -40,15 +40,17 @@ def browseFiles():
         importInCSV(file)
     return None
 
+def saveFile():
+    """Fonction permettant de sauvegarder le concours"""
+    pass
+
 ##### Configuration du menu de la fenêtre #####
 def menu(window):
     """Fonction permettant d'afficher la fenêtre d'accueil"""
     menu_bar = Menu(window)
     file_menu = Menu(menu_bar, tearoff=0)
-    file_menu.add_command(label="Nouveau", command=browseFiles)
     file_menu.add_command(label="Ouvrir", command=browseFiles)
-    file_menu.add_command(label="Enregistrer", command=browseFiles)
-    file_menu.add_command(label="Enregistrer sous...", command=browseFiles)
+    file_menu.add_command(label="Enregistrer", command=saveFile)
     file_menu.add_separator()
     file_menu.add_command(label="Quitter", command=window.destroy)
     menu_bar.add_cascade(label="Fichier", menu=file_menu)
@@ -74,21 +76,203 @@ def changerFrame(frame1, frame2):
 def messageErreur(message):
     """Fonction permettant d'afficher un message d'erreur"""
     messagebox.showerror("Erreur", message)
-
-def tableau():
-    if (len(concours.classement) == 0):
-        messageErreur("Il n'y a actuellement aucun participant")
-    else:
-        tableau = Tk()
-        tableau.title("Tableau des scores")
-        for i in range(len(concours.classement)):
-            for j in range(5):
-                label = Label(tableau, width=20, fg='blue', font=('Arial',16,'bold'))
-                label.grid(row=i, column=j)
-                label.insert(END, concours.classement[i][j])
-        tableau.mainloop()
 ################################## TKINTER ##################################
 
+
+############################## FENETRE TKINTER ##############################
+def tableau():
+    if (len(concours.joueurs) == 0):
+        messageErreur("Il n'y a actuellement aucun participant")
+    else:
+        fenetre = Tk()
+        fenetre.title("Tableau des scores")
+        fenetre.maxsize(1280, 720)
+        print(len(concours.joueurs))
+        for i in range(len(concours.joueurs)):
+            for j in range(5):
+                player = concours.joueurs[i]
+                print(player)
+                if (player.etat == True):
+                    entry = Entry(fenetre, width=20, fg='green', font=('Arial',16,'bold'))
+                else:
+                    entry = Entry(fenetre, width=20, fg='red', font=('Arial',16,'bold'))
+                entry.grid(row=i, column=j)
+                entry.insert(END, player[j])
+        fenetre.mainloop()
+
+def verificationIsNotEmptyPlayer(entry1, entry2, entry3, entry4, fenetre):
+    """Fonction permettant de valider l'ajout d'un joueur"""
+    if entry1.get() == "" or not entry2.get().isdigit() or not entry3.get().isdigit() or entry4.get().lower() != "o" and entry4.get().lower() != "n":
+        messageErreur("Veuillez vérifier que toutes les valeurs sont valides")
+    else:
+        concours.saisieJ(Joueur(entry1.get(), entry2.get(), entry3.get(), entry4.get()))
+        fenetre.destroy()
+
+def verificationIsNotEmptyEquipe(entry1, entry2, fenetre):
+    """Fonction permettant de valider l'ajout d'une équipe"""
+    if entry1.get() == "":
+        messageErreur("Veuillez vérifier que toutes les valeurs sont valides")
+    else:
+        concours.saisieE(Equipe(entry1.get()))
+        if entry2.get() != "":
+            for i in concours.joueurs:
+                if i.getName == entry2.get():
+                    i.description(entry1.get())
+        fenetre.destroy()
+
+########## Gérer les équipes ##########
+
+def ajouterEquipe():
+    """Fonction permettant d'ajouter une équipe"""
+    fenetre = Tk()
+    fenetre.title("Ajouter une équipe")
+    fenetre.maxsize(1280, 720)
+
+    frame = Frame(fenetre)
+
+    Label(frame, width=20, font=('Arial', 20), text="Nom").grid(row=0)
+    Label(frame, width=20, font=('Arial', 20), text="Joueurs").grid(row=1)
+
+    entry1 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+    entry2 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+    entry1.grid(row=0, column=1)
+    entry2.grid(row=1, column=1)
+
+    valider = Button(frame, text="Valider", command=lambda: verificationIsNotEmptyEquipe(entry1, entry2, fenetre)).grid(row=5, column=0, sticky=W, pady=4)
+    annuler = Button(frame, text="Annuler", command=fenetre.destroy).grid(row=5, column=1, sticky=W, pady=4)
+
+    afficherFrame(frame)
+
+
+def modifierEquipe():
+    pass
+
+
+def supprimerEquipe():
+    """Fonction permettant de supprimer une équipe"""
+    fenetre = Tk()
+    fenetre.title("Supprimer un équipe")
+    fenetre.maxsize(1280, 720)
+
+    frame = Frame(fenetre)
+
+    Label(frame, width=20, font=('Arial', 20), text="Nom").grid(row=0)
+
+    entry1 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+    entry1.grid(row=0, column=1)
+
+    valider = Button(frame, text="Valider", command=lambda: supprimer_equipe(entry1.get())).grid(row=5, column=0, sticky=W, pady=4)
+    annuler = Button(frame, text="Annuler", command=fenetre.destroy).grid(row=5, column=1, sticky=W, pady=4)
+
+    afficherFrame(frame)
+    
+
+
+########## Gérer les joueurs ##########
+def modifierJoueur():
+    """Fonction permettant de modifier un joueur"""
+    fenetre = Tk()
+    fenetre.title("Modifier un joueur")
+    fenetre.maxsize(1280, 720)
+
+    frame = Frame(fenetre)
+    
+    Label(frame, text="Veuillez indiquer le nom du joueur que vous souhaitez modifier")
+
+    name = Entry(frame)
+    name.focus_set()
+    name.pack(pady=25)
+
+    verifier = Button(frame, text="Vérifier", command= lambda: verification(name)).pack(pady=20)
+    annuler = Button(frame, text="Annuler", command=fenetre.destroy).pack(pady=20)
+
+    afficherFrame(frame)
+
+    def verification(name):
+        """Fonction permettant de vérifier que le joueur existe"""
+        for i in concours.joueurs:
+            if i.getName == name:
+
+                frame = Frame(fenetre)
+
+                Label(frame, width=20, font=('Arial', 20), text="Nom").grid(row=0)
+                Label(frame, width=20, font=('Arial', 20), text="Temps (en secondes)").grid(row=1)
+                Label(frame, width=20, font=('Arial', 20), text="Penalité").grid(row=2)
+                Label(frame, width=20, font=('Arial', 20), text="État (O/N)").grid(row=3)
+
+                entry1 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+                entry2 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+                entry3 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+                entry4 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+                entry1.grid(row=0, column=1)
+                entry2.grid(row=1, column=1)
+                entry3.grid(row=2, column=1)
+                entry4.grid(row=3, column=1)
+
+                valider = Button(frame, text="Valider", command=lambda: verificationIsNotEmptyPlayer(entry1, entry2, entry3, entry4, fenetre)).grid(row=5, column=0, sticky=W, pady=4)
+                annuler = Button(frame, text="Annuler", command=lambda: fenetre.destroy).grid(row=5, column=1, sticky=W, pady=4)
+
+                return afficherFrame(frame)
+
+        messageErreur("Le joueur n'existe pas")
+
+def supprimerJoueur():
+    """Fonction permettant de supprimer un joueur"""
+    fenetre = Tk()
+    fenetre.title("Supprimer un joueur")
+    fenetre.maxsize(1280, 720)
+
+    frame = Frame(fenetre)
+    
+    Label(frame, text="Veuillez indiquer le nom du joueur que vous souhaitez supprimer")
+
+    name = Entry(frame)
+    name.focus_set()
+    name.pack(pady=25)
+
+    verifier = Button(frame, text="Vérifier", command= lambda: verification(name)).pack(pady=20)
+    annuler = Button(frame, text="Annuler", command=fenetre.destroy).pack(pady=20)
+
+    afficherFrame(frame)
+
+    def verification(name):
+        """Fonction permettant de vérifier que le joueur existe"""
+        for i in concours.joueurs:
+            if i.getName == name:
+                supprimer_joueur(name)
+                return fenetre.destroy()
+
+        messageErreur("Le joueur n'existe pas")
+
+def ajouterJoueur():
+    """Fonction permettant d'ajouter un joueur"""
+    fenetre = Tk()
+    fenetre.title("Ajouter un joueur")
+    fenetre.maxsize(1280, 720)
+
+    frame = Frame(fenetre)
+
+    Label(frame, width=20, font=('Arial', 20), text="Nom").grid(row=0)
+    Label(frame, width=20, font=('Arial', 20), text="Temps (en secondes)").grid(row=1)
+    Label(frame, width=20, font=('Arial', 20), text="Penalité").grid(row=2)
+    Label(frame, width=20, font=('Arial', 20), text="État (O/N)").grid(row=3)
+
+    entry1 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+    entry2 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+    entry3 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+    entry4 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+    entry1.grid(row=0, column=1)
+    entry2.grid(row=1, column=1)
+    entry3.grid(row=2, column=1)
+    entry4.grid(row=3, column=1)
+
+    valider = Button(frame, text="Valider", command=lambda: verificationIsNotEmptyPlayer(entry1, entry2, entry3, entry4, fenetre)).grid(row=5, column=0, sticky=W, pady=4)
+    annuler = Button(frame, text="Annuler", command=fenetre.destroy).grid(row=5, column=1, sticky=W, pady=4)
+
+    afficherFrame(frame)
+
+
+############################## FENETRE TKINTER ##############################
 
 ################################## CSV ##################################
 ########### Importation ###########
