@@ -5,9 +5,10 @@ class Joueur:
         self.points = points
         self.penalite = penalite
         self.etat = etat
+        self.total = int(self.points) - int(self.penalite)
     
     def __str__(self):
-        return self.nom + " " + str(self.points) + " " + str(self.penalite) + " " + str(self.etat)
+        return self.nom + " Points : " + str(self.points) + " Points de pénalités : " + str(self.penalite) + " Qualifié : " + self.etat + " Score total : " + str(self.total)
 
 
     def getName(self):

@@ -91,15 +91,15 @@ def tableau():
         fenetre.maxsize(1280, 720)
         print(len(concours.joueurs))
         for i in range(len(concours.joueurs)):
-            for j in range(5):
-                player = concours.joueurs[i]
-                print(player)
-                if (player.etat == True):
-                    entry = Entry(fenetre, width=20, fg='green', font=('Arial',16,'bold'))
-                else:
-                    entry = Entry(fenetre, width=20, fg='red', font=('Arial',16,'bold'))
-                entry.grid(row=i, column=j)
-                entry.insert(END, player[j])
+            player = concours.joueurs[i]
+            print(player)
+            print(type(player))
+            if (player.etat == True):
+                entry = Entry(fenetre, width=100, fg='green', font=('Arial',16,'bold'))
+            else:
+                entry = Entry(fenetre, width=100, fg='red', font=('Arial',16,'bold'))
+            entry.grid(row=i, column=1)
+            entry.insert(END, player)
         fenetre.mainloop()
 
 def verificationIsNotEmptyPlayer(entry1, entry2, entry3, entry4, fenetre):
@@ -207,6 +207,7 @@ def modifierJoueur():
                 entry2 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
                 entry3 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
                 entry4 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+
                 entry1.grid(row=0, column=1)
                 entry2.grid(row=1, column=1)
                 entry3.grid(row=2, column=1)
@@ -264,10 +265,12 @@ def ajouterJoueur():
     entry2 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
     entry3 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
     entry4 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+
     entry1.grid(row=0, column=1)
     entry2.grid(row=1, column=1)
     entry3.grid(row=2, column=1)
     entry4.grid(row=3, column=1)
+
 
     valider = Button(frame, text="Valider", command=lambda: verificationIsNotEmptyPlayer(entry1, entry2, entry3, entry4, fenetre)).grid(row=5, column=0, sticky=W, pady=4)
     annuler = Button(frame, text="Annuler", command=fenetre.destroy).grid(row=5, column=1, sticky=W, pady=4)
