@@ -48,7 +48,6 @@ class Equipe:
 class Concours:
     def __init__(self):
         self.classement = []
-        self.joueurs = []
         self.equipes = []
         self.rules = None
 
@@ -61,12 +60,11 @@ class Concours:
     def modif(self, pointsPerSeconds):
         self.rules = pointsPerSeconds
 
-    def recl(self, Joueur):
-        p = Joueur
-        if p.etat == False:
-            p.etat = True
+    def recl(self, joueur):
+        if joueur[5] == False:
+            joueur[5] = True
         else:
-            p.etat = False
+            joueur[5] = False
         
     def chercherJoueur(self, nom):
         for i in self.classement:
