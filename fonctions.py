@@ -103,10 +103,10 @@ def tableau():
             else:
                 entry = Entry(fenetre, width=100, fg='red', font=('Arial',16,'bold'))
             entry.grid(row=i, column=1)
-            if player[5] != 'o':
-                player[1] = "Disqualifié !"
-            
-            siuu = f"Classement : {player[1]}      Nom : {player[0]}     Nombre de Points : {player[2]}      Pénalités : {player[3]}      Total : {player[4]}"
+            status = "Qualifié !"
+            if player[5] != 'o' and player[5] != 'O':
+                status = "Disqualifié !"
+            siuu = f"- {player[1]}      Nom : {player[0]}     Nombre de Points : {player[2]}      Pénalités : {player[3]}      Total : {player[4]}     Etat : {status}"
             entry.insert(END, siuu)
         fenetre.mainloop()
 
