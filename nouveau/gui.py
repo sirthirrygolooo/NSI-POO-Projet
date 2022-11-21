@@ -7,6 +7,14 @@ window.geometry("1280x720")
 window.minsize(1280, 720)
 window.maxsize(1280, 720)
 
+class Frame():
+    def __init__(self):
+        self.frame = Frame(window)
+        self.elements = []
+
+    def addLabel(self, text, fontfamily, fontsize):
+        self.elements.append(Label(self.frame, text=(fontfamily, fontsize))).pack(expand=YES)
+
 def accueil():
     frame = Frame(window)
 
