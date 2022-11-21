@@ -44,7 +44,12 @@ def browseFiles():
 
 def saveFile():
     """Fonction permettant de sauvegarder le concours"""
-    pass
+    file = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
+    if file is None:
+        messageErreur('Veuillez recommencer !')
+        menu(window)
+    else:
+        exportInCSV(file)
 
 ##### Configuration du menu de la fenêtre #####
 def menu(window):
@@ -94,7 +99,7 @@ def tableau():
             player = concours.joueurs[i]
             print(player)
             print(type(player))
-            if (player.etat == True):
+            if (player.etat == 'o' or player.etat == 'O'):
                 entry = Entry(fenetre, width=100, fg='green', font=('Arial',16,'bold'))
             else:
                 entry = Entry(fenetre, width=100, fg='red', font=('Arial',16,'bold'))
@@ -277,6 +282,7 @@ def ajouterJoueur():
 
     afficherFrame(frame)
     concours.afficherE()
+    
 
 
 ############################## FENETRE TKINTER ##############################
@@ -344,6 +350,6 @@ def exportRulesInCSV(Concours):
 def exportInCSV(file):
     """Fonction permettant d'exporter les données du concours dans un fichier CSV"""
     exportJoueursInCSV(file)
-    exportEquipesInCSV(file)
-    exportRulesInCSV(file)
+    exportEquipesInCSV(concours.equipes)
+    exportRulesInCSV(concours.rules)
 ################################## CSV ##################################

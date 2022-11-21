@@ -2,13 +2,13 @@ class Joueur:
     def __init__(self, nom, points, penalite, etat):
         self.nom = nom
         self.resultats = None
-        self.points = points
+        self.points = points * Concours.rules
         self.penalite = penalite
         self.etat = etat
         self.total = int(self.points) - int(self.penalite)
     
     def __str__(self):
-        return self.nom + " Points : " + str(self.points) + " Points de pénalités : " + str(self.penalite) + " Qualifié : " + self.etat + " Score total : " + str(self.total)
+        return self.nom + " Points : " + str(self.points) + "    Points de pénalités : " + str(self.penalite) +"    SCORE total : " + str(self.total)
 
 
     def getName(self):
