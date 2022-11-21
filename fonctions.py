@@ -20,8 +20,8 @@ def supprimer_equipe(nom):
 def supprimer_joueur(nom):
     """Fonction permettant de supprimer un joueur"""
     for joueur in concours.classement:
-        if joueur.nom == nom:
-            concours.classement.remove(joueur)
+        if joueur[0] == nom:
+            concours.classement.pop(joueur)
 
 def modifier_regles(points, frame1, frame2):
     """Fonction permettant de modifier les règles du concours"""
@@ -115,6 +115,9 @@ def verificationIsNotEmptyPlayer(entry1, entry2, entry3, entry4, fenetre):
     if entry1.get() == "" or not entry2.get().isdigit() or not entry3.get().isdigit() or entry4.get().lower() != "o" and entry4.get().lower() != "n":
         messageErreur("Veuillez vérifier que toutes les valeurs sont valides")
     else:
+        for joueur in concours.classement:
+            if joueur[0] == entry1.get():
+                supprimer_joueur(joueur[0])
         concours.saisieJ(Joueur(entry1.get(), entry2.get(), entry3.get(), entry4.get()))
         fenetre.destroy()
 
