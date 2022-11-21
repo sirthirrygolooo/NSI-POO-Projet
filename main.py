@@ -1,4 +1,3 @@
-from classes import Concours
 import os
 
 from tkinter_files.fenetre import afficher_fenetre

@@ -4,7 +4,6 @@ class Joueur:
         self.points = points
         self.penalite = penalite
         self.etat = etat
-        self.total = int(self.points) + int(self.penalite)
         self.equipe = None
 
     def getName(self):
@@ -18,10 +17,6 @@ class Joueur:
     def getPenalite(self):
         penalite = self.penalite
         return int(penalite)
-    
-    def getTotal(self):
-        total = self.total
-        return total
 
     def getEtat(self):
         etat = self.etat
@@ -49,7 +44,7 @@ class Concours:
         self.rules = None
 
     def trierclassement(self):
-        self.classement.sort(key=lambda a: a[3])
+        self.classement.sort(key=lambda a: a[4])
         print(f"Classement : {self.classement}")
         for i in range(len(self.classement)):
             self.classement[i][1] = i+1

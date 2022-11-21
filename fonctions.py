@@ -103,7 +103,9 @@ def tableau():
     else:
         fenetre = Tk()
         fenetre.title("Tableau des scores")
-        fenetre.maxsize(1280, 720)
+        fenetre.geometry("1500x800")
+        fenetre.minsize(1500, 800)
+        fenetre.maxsize(1500, 800)
         concours.trierclassement()
         for i in range(len(concours.classement)):
             player = concours.classement[i]
