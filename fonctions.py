@@ -11,17 +11,27 @@ def creer_equipe(nom):
     """Fonction permettant de créer une équipe"""
     concours.equipes.append(Equipe(nom))
 
-def supprimer_equipe(nom):
+def supprimer_equipe(nom, fenetre):
     """Fonction permettant de supprimer une équipe"""
     for equipe in concours.equipes:
+        valide = False
         if equipe.nom == nom:
-            concours.equipes.remove(equipe)
+            for i in concours.classement:
+                if i[6] == nom:
+                    i[6] = None
+            concours.equipes.pop(concours.equipes.index(equipe))
+            valide = True
+        if not valide:
+            messageErreur("L'équipe n'existe pas")
+        else:
+            fenetre.destroy()
+        
 
 def supprimer_joueur(nom):
     """Fonction permettant de supprimer un joueur"""
     for joueur in concours.classement:
         if joueur[0] == nom:
-            concours.classement.pop(joueur)
+            concours.classement.pop(concours.classement.index(joueur))
 
 def modifier_regles(points, frame1, frame2):
     """Fonction permettant de modifier les règles du concours"""
@@ -104,9 +114,14 @@ def tableau():
                 entry = Entry(fenetre, width=100, fg='red', font=('Arial',16,'bold'))
             entry.grid(row=i, column=1)
             status = "Qualifié !"
+            equipe = ""
+            if player[6] == None:
+                equipe = "Aucune"
+            else:
+                equipe = player[6] 
             if player[5] != 'o' and player[5] != 'O':
                 status = "Disqualifié !"
-            siuu = f"- {player[1]}      Nom : {player[0]}     Nombre de Points : {player[2]}      Pénalités : {player[3]}      Total : {player[4]}     Etat : {status}"
+            siuu = f"{player[1]}.      Nom : {player[0]}     Nombre de Points : {player[2]}      Pénalités : {player[3]}      Total : {player[4]}     Etat : {status}     Equipe : {equipe}"
             entry.insert(END, siuu)
         fenetre.mainloop()
 
@@ -128,9 +143,31 @@ def verificationIsNotEmptyEquipe(entry1, entry2, fenetre):
     else:
         concours.saisieE(Equipe(entry1.get()))
         if entry2.get() != "":
+            valide = False
             for i in concours.classement:
-                if i.getName == entry2.get():
-                    i.description(entry1.get())
+                if i[0] == entry2.get():
+                    i[6] = entry1.get()
+                    valide = True
+            if not valide:
+                messageErreur("Le joueur n'existe pas")
+        fenetre.destroy()
+
+def verificationIsNotEmptyJoueurEquipe(entry1, entry2, fenetre):
+    """Fonction permettant de valider l'ajout d'un joueur dans une équipe"""
+    if entry1.get() == "" or entry2.get() == "":
+        messageErreur("Veuillez vérifier que toutes les valeurs sont valides")
+    else:
+        valide = False
+        for i in concours.equipes:
+            if i[0] == entry1.get():
+                for j in concours.classement:
+                    if j[0] == entry2.get():
+                        j.append(entry1.get())
+                        i.append(j)
+                        valide = True
+        if not valide:
+            messageErreur("Le joueur/l'équipe n'existe pas")
+
         fenetre.destroy()
 
 ########## Gérer les équipes ##########
@@ -156,10 +193,26 @@ def ajouterEquipe():
 
     afficherFrame(frame)
 
+# def ajouterJoueurEquipe():
+#     """Fonction permettant d'ajouter un joueur à une équipe"""
+#     fenetre = Tk()
+#     fenetre.title("Ajouter un joueur à une équipe")
+#     fenetre.maxsize(1280, 720)
 
-def modifierEquipe():
-    """Fonction permettant de modifier une équipe"""
-    pass
+#     frame = Frame(fenetre)
+
+#     Label(frame, width=20, font=('Arial', 20), text="Nom").grid(row=0)
+#     Label(frame, width=20, font=('Arial', 20), text="Equipe").grid(row=1)
+
+#     entry1 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+#     entry2 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
+#     entry1.grid(row=0, column=1)
+#     entry2.grid(row=1, column=1)
+
+#     valider = Button(frame, text="Valider", command=lambda: verificationIsNotEmptyJoueurEquipe(entry1, entry2, fenetre)).grid(row=5, column=0, sticky=W, pady=4)
+#     annuler = Button(frame, text="Annuler", command=fenetre.destroy).grid(row=5, column=1, sticky=W, pady=4)
+
+#     afficherFrame(frame)
 
 
 def supprimerEquipe():
@@ -175,7 +228,7 @@ def supprimerEquipe():
     entry1 = Entry(frame, width=20, fg='blue', font=('Arial', 20))
     entry1.grid(row=0, column=1)
 
-    valider = Button(frame, text="Valider", command=lambda: supprimer_equipe(entry1.get())).grid(row=5, column=0, sticky=W, pady=4)
+    valider = Button(frame, text="Valider", command=lambda: supprimer_equipe(entry1.get(), fenetre)).grid(row=5, column=0, sticky=W, pady=4)
     annuler = Button(frame, text="Annuler", command=fenetre.destroy).grid(row=5, column=1, sticky=W, pady=4)
 
     afficherFrame(frame)

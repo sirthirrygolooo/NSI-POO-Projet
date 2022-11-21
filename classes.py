@@ -5,10 +5,7 @@ class Joueur:
         self.penalite = penalite
         self.etat = etat
         self.total = int(self.points) + int(self.penalite)
-    
-    def __str__(self):
-        return self.nom + " Points : " + str(self.points) + "    Points de pénalités : " + str(self.penalite) +"    SCORE total : " + str(self.total)
-
+        self.equipe = None
 
     def getName(self):
         nom = self.nom
@@ -55,7 +52,7 @@ class Concours:
         self.classement.sort(key=lambda a: a[3])
         print(f"Classement : {self.classement}")
         for i in range(len(self.classement)):
-            self.classement[i].insert(1, i+1)
+            self.classement[i][1] = i+1
 
     def modif(self, pointsPerSeconds):
         self.rules = pointsPerSeconds
@@ -73,7 +70,7 @@ class Concours:
         return None
 
     def saisieJ(self, Joueur):
-        self.classement.append([Joueur.getName(), Joueur.getPoints(), Joueur.getPenalite(), (Joueur.getPoints() * int(self.rules)) + Joueur.getPenalite(), Joueur.getEtat()])
+        self.classement.append([Joueur.getName(), None, Joueur.getPoints(), Joueur.getPenalite(), (Joueur.getPoints() * int(self.rules)) + Joueur.getPenalite(), Joueur.getEtat(), None])
 
     def saisieE(self, Equipe):
         self.equipes.append(Equipe)

@@ -56,7 +56,6 @@ equipes = Frame(window)
 message = Label(equipes, text="Veuillez sélectionner une option ci-dessous", font=("Arial", 40)).pack(expand=YES)
 
 ajouter = Button(equipes, text="Ajouter une équipe", font=("Arial", 20), fg='#0000FF', command= ajouterEquipe).pack(pady=25)
-modifier = Button(equipes, text="Modifier une équipe", font=("Arial", 20), fg='#0000FF', command= modifierEquipe).pack(pady=25)
 supprimer = Button(equipes, text="Supprimer une équipe", font=("Arial", 20), fg='#0000FF', command= supprimerEquipe).pack(pady=25)
 retour = Button(equipes, text="Retour", font=("Arial", 20), fg='#0000FF', command= lambda: changerFrame(equipes, menu_principal)).pack(pady=25)
 ################################## GERER LES EQUIPES ##################################
