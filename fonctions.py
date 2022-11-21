@@ -103,7 +103,11 @@ def tableau():
             else:
                 entry = Entry(fenetre, width=100, fg='red', font=('Arial',16,'bold'))
             entry.grid(row=i, column=1)
-            entry.insert(END, [player[0], player[1], player[2], player[3], player[4]])
+            if player[5] != 'o':
+                player[1] = "Disqualifié !"
+            
+            siuu = f"Classement : {player[1]}      Nom : {player[0]}     Nombre de Points : {player[2]}      Pénalités : {player[3]}      Total : {player[4]}"
+            entry.insert(END, siuu)
         fenetre.mainloop()
 
 def verificationIsNotEmptyPlayer(entry1, entry2, entry3, entry4, fenetre):
