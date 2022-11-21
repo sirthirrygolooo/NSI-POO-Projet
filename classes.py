@@ -48,7 +48,6 @@ class Equipe:
 class Concours:
     def __init__(self):
         self.classement = []
-        self.joueurs = []
         self.equipes = []
         self.rules = None
 

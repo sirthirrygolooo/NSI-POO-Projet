@@ -280,8 +280,6 @@ def ajouterJoueur():
     annuler = Button(frame, text="Annuler", command=fenetre.destroy).grid(row=5, column=1, sticky=W, pady=4)
 
     afficherFrame(frame)
-    concours.afficherE()
-    
 
 
 ############################## FENETRE TKINTER ##############################
