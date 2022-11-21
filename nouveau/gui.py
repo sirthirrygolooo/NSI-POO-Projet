@@ -15,6 +15,9 @@ class Frame():
     def addLabel(self, text, fontfamily, fontsize):
         self.elements.append(Label(self.frame, text=(fontfamily, fontsize))).pack(expand=YES)
 
+    def addButton(self, text, fontfamily, fontsize, command, expand=NO):
+        self.elements.append(Button(self.frame, text=(fontfamily, fontsize), command=command)).pack(expand=expand)
+
 def accueil():
     frame = Frame(window)
 
