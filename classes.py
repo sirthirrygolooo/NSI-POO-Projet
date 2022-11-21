@@ -54,9 +54,9 @@ class Concours:
 
     def trierclassement(self):
         self.classement.sort(key=lambda a: a[3])
-        print(self.classement)
+        print(f"Classement : {self.classement}")
         for i in range(len(self.classement)):
-            self.classement[i][1] = i+1
+            self.classement[i].insert(1, i+1)
 
     def modif(self, pointsPerSeconds):
         self.rules = pointsPerSeconds
@@ -75,14 +75,10 @@ class Concours:
         return None
 
     def saisieJ(self, Joueur):
-        self.classement.append([Joueur.getName(), Joueur.getPoints() * int(self.rules), Joueur.getPenalite(), (Joueur.getPoints() * int(self.rules)) + Joueur.getPenalite(), Joueur.getEtat()])
+        self.classement.append([Joueur.getName(), Joueur.getPoints(), Joueur.getPenalite(), (Joueur.getPoints() * int(self.rules)) + Joueur.getPenalite(), Joueur.getEtat()])
 
     def saisieE(self, Equipe):
         self.equipes.append(Equipe)
-
-    def afficherE(self):
-        for i in self.equipes:
-            print(i.nom, i.listeJoueurs())
 
 
 concours = Concours()

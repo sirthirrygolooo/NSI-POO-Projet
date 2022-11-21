@@ -97,12 +97,13 @@ def tableau():
         concours.trierclassement()
         for i in range(len(concours.classement)):
             player = concours.classement[i]
-            if (player[4] == 'o' or player[4] == 'O'):
+            print(f"Concours : {player}")
+            if (player[5] == 'o' or player[5] == 'O'):
                 entry = Entry(fenetre, width=100, fg='green', font=('Arial',16,'bold'))
             else:
                 entry = Entry(fenetre, width=100, fg='red', font=('Arial',16,'bold'))
             entry.grid(row=i, column=1)
-            entry.insert(END, [player[0], player[1], player[2], player[3]])
+            entry.insert(END, [player[0], player[1], player[2], player[3], player[4]])
         fenetre.mainloop()
 
 def verificationIsNotEmptyPlayer(entry1, entry2, entry3, entry4, fenetre):
