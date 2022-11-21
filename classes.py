@@ -1,11 +1,10 @@
 class Joueur:
     def __init__(self, nom, points, penalite, etat):
         self.nom = nom
-        self.resultats = None
-        self.points = points * Concours.rules
+        self.points = points
         self.penalite = penalite
         self.etat = etat
-        self.total = int(self.points) - int(self.penalite)
+        self.total = int(self.points) + int(self.penalite)
     
     def __str__(self):
         return self.nom + " Points : " + str(self.points) + "    Points de pénalités : " + str(self.penalite) +"    SCORE total : " + str(self.total)
@@ -17,12 +16,16 @@ class Joueur:
     
     def getPoints(self):
         points = self.points
-        return points
+        return int(points)
     
     def getPenalite(self):
         penalite = self.penalite
-        return penalite
+        return int(penalite)
     
+    def getTotal(self):
+        total = self.total
+        return total
+
     def getEtat(self):
         etat = self.etat
         return etat
@@ -45,15 +48,15 @@ class Equipe:
 class Concours:
     def __init__(self):
         self.classement = []
-        self.disqualifie = []
         self.joueurs = []
         self.equipes = []
         self.rules = None
 
-    def __classement__(self):
-        self.classement.sort(key=lambda a: ((a[3]*self.rules)+a[4]))
+    def trierclassement(self):
+        self.classement.sort(key=lambda a: a[3])
+        print(self.classement)
         for i in range(len(self.classement)):
-            self.classement[i].resultats = i+1
+            self.classement[i][1] = i+1
 
     def modif(self, pointsPerSeconds):
         self.rules = pointsPerSeconds
@@ -72,11 +75,7 @@ class Concours:
         return None
 
     def saisieJ(self, Joueur):
-        if Joueur.etat == 'o':
-            self.classement.append(Joueur)
-        else:
-            self.disqualifie.append(Joueur)
-        self.joueurs.append(Joueur)
+        self.classement.append([Joueur.getName(), Joueur.getPoints() * int(self.rules), Joueur.getPenalite(), (Joueur.getPoints() * int(self.rules)) + Joueur.getPenalite(), Joueur.getEtat()])
 
     def saisieE(self, Equipe):
         self.equipes.append(Equipe)

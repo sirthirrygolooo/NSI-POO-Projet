@@ -19,9 +19,9 @@ def supprimer_equipe(nom):
 
 def supprimer_joueur(nom):
     """Fonction permettant de supprimer un joueur"""
-    for joueur in concours.joueurs:
+    for joueur in concours.classement:
         if joueur.nom == nom:
-            concours.joueurs.remove(joueur)
+            concours.classement.remove(joueur)
 
 def modifier_regles(points, frame1, frame2):
     """Fonction permettant de modifier les règles du concours"""
@@ -88,23 +88,21 @@ def messageErreur(message):
 
 ############################## FENETRE TKINTER ##############################
 def tableau():
-    if (len(concours.joueurs) == 0):
+    if (len(concours.classement) == 0):
         messageErreur("Il n'y a actuellement aucun participant")
     else:
         fenetre = Tk()
         fenetre.title("Tableau des scores")
         fenetre.maxsize(1280, 720)
-        print(len(concours.joueurs))
-        for i in range(len(concours.joueurs)):
-            player = concours.joueurs[i]
-            print(player)
-            print(type(player))
-            if (player.etat == 'o' or player.etat == 'O'):
+        concours.trierclassement()
+        for i in range(len(concours.classement)):
+            player = concours.classement[i]
+            if (player[4] == 'o' or player[4] == 'O'):
                 entry = Entry(fenetre, width=100, fg='green', font=('Arial',16,'bold'))
             else:
                 entry = Entry(fenetre, width=100, fg='red', font=('Arial',16,'bold'))
             entry.grid(row=i, column=1)
-            entry.insert(END, player)
+            entry.insert(END, [player[0], player[1], player[2], player[3]])
         fenetre.mainloop()
 
 def verificationIsNotEmptyPlayer(entry1, entry2, entry3, entry4, fenetre):
@@ -122,7 +120,7 @@ def verificationIsNotEmptyEquipe(entry1, entry2, fenetre):
     else:
         concours.saisieE(Equipe(entry1.get()))
         if entry2.get() != "":
-            for i in concours.joueurs:
+            for i in concours.classement:
                 if i.getName == entry2.get():
                     i.description(entry1.get())
         fenetre.destroy()
@@ -198,7 +196,7 @@ def modifierJoueur():
 
     def verification(name):
         """Fonction permettant de vérifier que le joueur existe"""
-        for i in concours.joueurs:
+        for i in concours.classement:
             if i.getName == name:
 
                 frame = Frame(fenetre)
@@ -246,7 +244,7 @@ def supprimerJoueur():
 
     def verification(name):
         """Fonction permettant de vérifier que le joueur existe"""
-        for i in concours.joueurs:
+        for i in concours.classement:
             if i.getName == name:
                 supprimer_joueur(name)
                 return fenetre.destroy()
@@ -294,7 +292,7 @@ def importJoueursInCSV(file):
     with open(file.name, 'r', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=';', quotechar='|')
         for row in reader:
-            Concours.joueurs.append(Joueur(row[0], row[1], row[2], row[3], row[4]))
+            concours.classement.append(Joueur(row[0], row[1], row[2], row[3], row[4]))
 
 def importEquipesInCSV(file):
     """Fonction permettant d'importer la liste des équipes dans un fichier CSV"""
@@ -314,7 +312,7 @@ def importInCSV(file):
     """Fonction permettant d'importer les données du concours dans un fichier CSV"""
     with open(file.name, 'r', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=';', quotechar='|')
-        Concours.joueurs = []
+        concours.classement = []
         Concours.equipes = []
         for row in reader:
             if row[4]:
