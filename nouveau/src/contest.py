@@ -14,13 +14,13 @@ class Car:
 
     def calculateTotal(self, multiplier):
         """Calculate the total points of the car
-        {multiplier} - (int) the number of points per second"""
+        {multiplier} -> int"""
         self.total = int(self.points * multiplier + self.penality) 
 
     def set(self, type, value):
         """Edit the value of a type of information
-        {type} - (str) the type of information
-        {value} - (str/int/object) the new value"""
+        {type} -> str
+        {value} -> str/int/object"""
         match type:
             case "name":
                 self.name = value
@@ -35,7 +35,7 @@ class Car:
 
     def get(self, type):
         """Return the value of a type of information
-        {type} - (str) the type of information"""
+        {type} -> str"""
         match type:
             case "name":
                 return self.name
@@ -57,7 +57,7 @@ class Team:
 
     def get(self, type, value=None):
         """Return the value of a type of information
-        {type} - (String) Type of information"""
+        {type} -> str"""
         match type:
             case "name":
                 return self.name
@@ -77,7 +77,7 @@ class Team:
 
     def addCar(self, Car):
         """Add a car to the team
-        {Car} - Car object"""
+        {Car} - Object"""
         if Car.get("team") == None:
             Car.set("team", self)
             self.cars.append(Car)
@@ -87,7 +87,7 @@ class Team:
 
     def removeCar(self, Car):
         """Remove a car from the team
-        {Car} - Car object"""
+        {Car} - Object"""
         if Car in self.cars:
             self.cars.remove(Car)
             return True
@@ -96,7 +96,7 @@ class Team:
 
     def editName(self, name):
         """Edit the name of the team
-        {name} - New name of the team"""
+        {name} -> str"""
         self.name = name
 
 class Contest:
@@ -116,13 +116,13 @@ class Contest:
 
     def editRules(self, pointsPerSeconds):
         """Edit the rules of the contest
-        {pointsPerSeconds} - The number of points per seconds"""
+        {pointsPerSeconds} -> int"""
         self.rules = pointsPerSeconds
         return True
 
     def addTeam(self, Team):
         """Add a team to the contest
-        {Team} - Team object"""
+        {Team} -> object"""
         if Team not in self.teams:
             self.teams.append(Team)
             return True
@@ -131,7 +131,7 @@ class Contest:
 
     def removeTeam(self, Team):
         """Remove a team from the contest
-        {Team} - Team object"""
+        {Team} -> object"""
         if Team in self.teams:
             self.teams.remove(Team)
             for car in Team.get("listCars"):
@@ -142,8 +142,8 @@ class Contest:
 
     def addCar(self, Car, Team=None):
         """Add a car to a team
-        {Car} - Car object
-        {Team} - Team object"""
+        {Car} -> object
+        {Team} -> object"""
         if Team in self.teams:
             Team.addCar(Car)
         else:
@@ -152,7 +152,7 @@ class Contest:
 
     def removeCar(self, Car):
         """Remove a car from the contest
-        {Car} - Car object"""
+        {Car} -> Car object"""
         if Car in self.classement:
             self.classement.remove(Car)
             return True
