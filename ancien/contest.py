@@ -158,4 +158,3 @@ class Contest:
             return True
         else:
             return None
-
