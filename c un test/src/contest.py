@@ -8,6 +8,9 @@ class Player:
         self.total = None
         self.team = None
 
+    def __str__(self):
+        return f"{self.name} - {self.classification} - {self.points} - {self.penalty} - {self.state} - {self.total} - {self.team}"
+
     def getAllInformations(self):
         """Return a list of all informations about the player"""
         return [self.name, self.classification, int(self.points), int(self.penalty), self.state, self.classification, self.total, self.team]
