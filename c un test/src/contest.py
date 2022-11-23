@@ -9,7 +9,7 @@ class Player:
         self.team = None
 
     def __str__(self):
-        return f"{self.name} - {self.classification} - {self.points} - {self.penalty} - {self.state} - {self.total} - {self.team}"
+        return self.name, self.classification, int(self.points), int(self.penalty), self.state, self.classification, self.total, self.team
 
     def getAllInformations(self):
         """Return a list of all informations about the player"""
@@ -62,6 +62,9 @@ class Team:
         self.name = name
         self.players = []
 
+    def __jedoismettreuntrucprive__(self):
+        pass
+
     def editName(self, name):
         """Edit the name of the team
         {name} -> str"""
@@ -111,6 +114,9 @@ class Contest:
         self.classement = []
         self.teams = []
         self.rules = None
+
+    def __moiaussijenaibesoin__(self):
+        pass
 
     def sortClassement(self):
         """Sort the classement list by total points"""
