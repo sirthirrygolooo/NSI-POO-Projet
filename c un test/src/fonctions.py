@@ -1,6 +1,7 @@
 from tkinter import *
-from tkinter import messagebox
-from src.contest import contest, Player, Team
+import csv
+from tkinter import messagebox, filedialog
+from src.contest import contest, Player, Team, Contest
 
 def errorMessage(message):
     """Fonction permettant d'afficher un message d'erreur"""
@@ -159,8 +160,92 @@ def removeTeam(name, window):
         for team in contest.teams:
             if team.get('name') == name:
                 contest.teams.remove(team)
+                for i in team.get('listPlayers'):
+                    i.set('team', None)
                 teamExist = True
         if teamExist is False:
             return errorMessage("L'équipe n'existe pas")
         else:
             window.destroy()
+
+################################## CSV ##################################
+########### Importation ###########
+def importJoueursInCSV(file):
+    """Fonction permettant d'importer la liste des joueurs dans un fichier CSV"""
+    with open(file.name, 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter=';', quotechar='|')
+        for row in reader:
+            contest.classement.append(Player(row[0], row[1], row[2], row[3], row[4]))
+
+def importEquipesInCSV(file):
+    """Fonction permettant d'importer la liste des équipes dans un fichier CSV"""
+    with open(file.name, 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter=';', quotechar='|')
+        for row in reader:
+            contest.equipes.append(Team(row[0], row[1]))
+            
+def importRulesInCSV(file):
+    """Fonction permettant d'importer les règles du concours dans un fichier CSV"""
+    with open(file.name, 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter=';', quotechar='|')
+        for row in reader:
+            Contest.rules = row[0]
+
+def importInCSV(file):
+    """Fonction permettant d'importer les données du concours dans un fichier CSV"""
+    with open(file.name, 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter=';', quotechar='|')
+        contest.classement = []
+        contest.equipes = []
+        for row in reader:
+            if row[4]:
+                exportJoueursInCSV(Contest)
+            elif row[1]:
+                exportEquipesInCSV(Team)
+            elif row[0]:
+                exportRulesInCSV(Contest)
+            else:
+                print("Erreur lors de l'importation du fichier")
+
+########### Exportation ###########
+def exportEquipesInCSV(file):
+    """Fonction permettant d'exporter la liste des équipes dans un fichier CSV"""
+    with open(file.csv, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for equipe in Team:
+            writer.writerow([equipe.nom, equipe.joueurs])
+
+def exportJoueursInCSV(Contest):
+    """Fonction permettant d'exporter la liste des joueurs dans un fichier CSV"""
+    with open('joueurs.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for joueur in Contest.classement:
+            writer.writerow([joueur.nom, joueur.description, joueur.resultats, joueur.points, joueur.etat])
+
+def exportRulesInCSV(Contest):
+    """Fonction permettant d'exporter les règles du concours dans un fichier CSV"""
+    with open('rules.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow([Contest.rules])
+
+def exportInCSV(file):
+    """Fonction permettant d'exporter les données du concours dans un fichier CSV"""
+    exportJoueursInCSV(file)
+    exportEquipesInCSV(contest.equipes)
+    exportRulesInCSV(contest.rules)
+
+def browseFiles():
+    """Fonction permettant de parcourir les fichiers et de retourner le contenu d'un fichier CSV"""
+    file = filedialog.askopenfile(mode='r', title="Select file", filetypes=(("CSV Files","*.csv"),))
+    if file is not None:
+        importInCSV(file)
+    return None
+
+def saveFile():
+    """Fonction permettant de sauvegarder le concours"""
+    file = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
+    if file is None:
+        errorMessage('Veuillez recommencer !')
+    else:
+        exportInCSV(file)
+
